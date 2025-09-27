@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Учетные данные доступа</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border: 2px solid #404040;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+        }
+
+        .credentials {
+            margin: 30px 0;
+        }
+
+        .credential-item {
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .credential-item:hover {
+            background: #2a2a2a;
+            border-color: #606060;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .credential-label {
+            font-size: 14px;
+            color: #cccccc;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .credential-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .credential-value {
+            font-size: 18px;
+            font-family: 'Courier New', monospace;
+            color: #ffffff;
+            background: #000000;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #333333;
+            word-break: break-all;
+            user-select: all;
+            cursor: text;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .credential-value:hover {
+            background: #111111;
+            border-color: #555555;
+        }
+
+        .copy-btn {
+            background: linear-gradient(145deg, #404040, #2a2a2a);
+            border: 1px solid #555555;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            min-width: 40px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .copy-btn::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border: 2px solid #ffffff;
+            border-radius: 2px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-55%, -55%);
+        }
+
+        .copy-btn::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border: 2px solid #ffffff;
+            border-radius: 2px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-45%, -45%);
+            background: #404040;
+        }
+
+        .copy-btn:hover {
+            background: linear-gradient(145deg, #555555, #404040);
+            border-color: #777777;
+            transform: scale(1.05);
+        }
+
+        .copy-btn:hover::before,
+        .copy-btn:hover::after {
+            border-color: #cccccc;
+        }
+
+        .copy-btn:hover::after {
+            background: #555555;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .copy-btn.copied {
+            background: linear-gradient(145deg, #006600, #004400);
+            border-color: #008800;
+        }
+
+        .copy-btn.copied::before,
+        .copy-btn.copied::after {
+            display: none;
+        }
+
+        .copy-btn.copied::before {
+            content: '✓';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border: none;
+            font-size: 14px;
+            color: #ffffff;
+            transform: translate(-50%, -50%);
+        }
+
+        .market-button {
+            background: linear-gradient(145deg, #ffffff, #e0e0e0);
+            color: #000000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 
+                0 4px 8px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .market-button:hover {
+            background: linear-gradient(145deg, #f0f0f0, #d0d0d0);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 12px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        }
+
+        .market-button:active {
+            transform: translateY(0);
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .copy-hint {
+            font-size: 12px;
+            color: #888888;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .credential-value {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Учетные данные доступа</h1>
+        
+        <div class="credentials">
+            <div class="credential-item">
+                <div class="credential-label">Логин</div>
+                <div class="credential-row">
+                    <div class="credential-value">тест</div>
+                    <button class="copy-btn" onclick="copyToClipboard('тест', this)"></button>
+                </div>
+            </div>
+            
+            <div class="credential-item">
+                <div class="credential-label">Пароль</div>
+                <div class="credential-row">
+                    <div class="credential-value">тест</div>
+                    <button class="copy-btn" onclick="copyToClipboard('тест', this)"></button>
+                </div>
+            </div>
+        </div>
+        
+        <a href="https://lft.market" target="_blank" class="market-button">
+            Перейти на LFT.Market
+        </a>
+        
+        <div class="copy-hint">
+            Нажмите на поле с данными для выделения и копирования
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Показываем успешное копирование
+                button.classList.add('copied');
+                
+                setTimeout(function() {
+                    button.classList.remove('copied');
+                }, 1500);
+            }).catch(function(err) {
+                // Fallback для старых браузеров
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                button.classList.add('copied');
+                
+                setTimeout(function() {
+                    button.classList.remove('copied');
+                }, 1500);
+            });
+        }
+    </script>
+</body>
+</html>
